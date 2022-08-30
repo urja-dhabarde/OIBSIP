@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!-- Created By Urja Dhabarde-->
+<!-- Oasis Infobyte Web Development internship Level-1 Task-3-->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature converter</title>
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    
+     :root {
+        font-family: "Roboto", sans-serif;
+        --color: rgb(227, 236, 241);
+        --color2: rgb(91, 189, 186);
+    }
+    
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+        color: black;
+        background-image: linear-gradient( 330deg, var(--color) 20%, var(--color2) 70%);
+        font-size: 20px;
+    }
+    
+    label {
+        font-size: 40px;
+        letter-spacing: 2px;
+        font-weight: bold;
+    }
+    
+    input {
+        margin: 50px 0 10px;
+        padding: 7px;
+        font-size: 20px;
+    }
+    
+    .result {
+        margin: 10px 0 50px;
+        font-size: 26px;
+        color: black;
+        letter-spacing: 1px;
+        height: 1em;
+        font-weight: bold;
+    }
+    
+    button {
+        width: 200px;
+        margin: 0 30px;
+        padding: 10px 30px;
+        background: none;
+        border: 2px black;
+        border-radius: 5px;
+        color: rgb(99, 99, 101);
+        font-size: 25px;
+        transition: color 0.3s, box-shadow 0.3s;
+        box-shadow: 3px 3px 10px black;
+        text-transform: uppercase;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        color: black;
+        box-shadow: 3px 3px 10px black;
+    }
+    
+    #converter {
+        border-radius: 20px;
+    }
+    
+    .navbar {
+        margin-bottom: 100px;
+        padding: auto;
+    }
+</style>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#" style="color: black; text-decoration: none;">
+                    <h2>Temperature Converter</h2>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <header>
+        <label for="converter">Convert<span class="C"> °C </span> to <span class="F"> °F </span></label>
+    </header>
+
+    <div>
+        <input type="text" id="converter" placeholder="°C">
+    </div>
+
+    <p class="result"></p>
+
+    <div id="buttons">
+        <button class="convertButton">Convert</button>
+        <button class="resetButton">Reset</button>
+        <button class="changeButton">Change</button>
+    </div>
+    <script>
+        const converter = document.querySelector('#converter');
+        const result = document.querySelector('.result');
+        const convertButton = document.querySelector('.convertButton');
+        const resetButton = document.querySelector('.resetButton');
+        const changeButton = document.querySelector('.changeButton');
+        const C = document.querySelector('.C')
+        const F = document.querySelector('.F')
+
+        const swap = () => {
+            if (C.innerHTML === '°C') {
+                C.innerHTML = '°F';
+                F.innerHTML = '°C';
+                document.title = "Converter °F to °C";
+                converter.placeholder = "°F";
+
+            } else {
+                F.innerHTML = '°F';
+                C.innerHTML = '°C';
+                document.title = "Converter °C to °F";
+                converter.placeholder = "°C";
+            };
+        };
+
+        const reset = () => {
+            converter.value = '';
+            result.innerHTML = '';
+        }
+
+        const convert = () => {
+            if (/^(-?)(\d+)(\.{1}\d+)?$/.test(converter.value)) {
+                result.style.color = "blue"
+                if (C.innerHTML === '°C') {
+                    let value = (converter.value * 1.8) + 32;
+                    result.innerHTML = `${converter.value}°C to ${value.toFixed(2)}°F`;
+                } else {
+                    let value = (converter.value - 32) / 1.8;
+                    result.innerHTML = `${converter.value}°F to ${value.toFixed(2)}°C`;
+                }
+            } else if (converter.value == '') {
+                result.style.color = "#993300"
+                result.innerHTML = 'Write correct value!';
+            } else {
+                result.style.color = "#993300"
+                result.innerHTML = 'Wrong value!';
+            }
+        }
+
+        changeButton.addEventListener('click', swap);
+        resetButton.addEventListener('click', reset);
+        convertButton.addEventListener('click', convert);
+    </script>
+</body>
+
+</html>
